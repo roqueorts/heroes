@@ -1,0 +1,30 @@
+{
+    "/mock": {
+        "target": "http://localhost:3000",
+        "secure": false,
+        "pathRewrite": {
+            "^/mock": ""
+        }
+    },
+    "/api": {
+        "target": "http://localhost:9001",
+        "secure": false,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    },
+    "/api2": {
+        "target": "http://localhost:3000",
+        "secure": false,
+        "pathRewrite": {
+            "^/api2": ""
+        }
+    },
+    "/mock2": {
+        "target": "http://localhost:3000",
+        "secure": false,
+        "pathRewrite": {
+            "^/mock": "api"
+        }
+    }
+}

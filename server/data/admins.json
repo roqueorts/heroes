@@ -1,0 +1,10 @@
+{
+    "admins": [
+        {
+            "id": 1232,
+            "name": "John Owen",
+            "age": 53,
+            "eyeColor": "brown"
+        }
+    ]
+}
