@@ -1,61 +1,83 @@
 {
   "posts": [
     {
-      "id": 1,
+      "id": "1",
       "title": "json-server",
       "author": "typicode"
     }
   ],
   "comments": [
     {
-      "id": 1,
+      "id": "1",
       "body": "some comment",
       "postId": 1
     }
   ],
   "profile": {
     "name": "typicode"
-  }
-,
-    "admins": [
-        {
-            "id": 1232,
-            "name": "John Owen",
-            "age": 53,
-            "eyeColor": "brown"
-        }
-    ]
-,
-    "heroes": [
-        {
-            "id": 1234,
-            "name": "Andrew Owenes",
-            "age": 26,
-            "eyeColor": "blue"
-        },
-        {
-            "id": 1235,
-            "name": "Susan prueba",
-            "age": 45,
-            "eyeColor": "hazel"
-        },
-        {
-            "id": 1236,
-            "name": "John Doe",
-            "age": 53,
-            "eyeColor": "brown"
-        },
-        {
-            "id": 1237,
-            "name": "roqueorts",
-            "age": 44,
-            "eyeColor": "green"
-        },
-        {
-            "id": 1238,
-            "name": "karina",
-            "age": 38,
-            "eyeColor": "green"
-        }
-    ]
+  },
+  "admins": [
+    {
+      "id": "1232",
+      "name": "John Owen",
+      "age": 53,
+      "eyeColor": "brown"
+    }
+  ],
+  "heroes": [
+    {
+      "id": "1234",
+      "name": "Andrew Owen",
+      "age": "27",
+      "eyeColor": "blue"
+    },
+    {
+      "id": "1235",
+      "name": "Susan prueba",
+      "age": 45,
+      "eyeColor": "hazel"
+    },
+    {
+      "id": "1236",
+      "name": "John Doe",
+      "age": 53,
+      "eyeColor": "brown"
+    },
+    {
+      "id": "0",
+      "name": "Blas de Lezo",
+      "age": "34",
+      "eyeColor": "Azules"
+    },
+    {
+      "id": "",
+      "name": "Isabel",
+      "age": "33",
+      "eyeColor": "azul"
+    },
+    {
+      "id": "",
+      "name": "test",
+      "age": "44",
+      "eyeColor": "xxx"
+    },
+    {
+      "id": "",
+      "name": "dfdfd",
+      "age": "22",
+      "eyeColor": "fdf"
+    },
+    {
+      "id": "",
+      "name": "rere",
+      "age": "233",
+      "eyeColor": "dfd"
+    },
+    {
+      "id": "",
+      "name": "tygyh",
+      "age": "54",
+      "eyeColor": "gfhg"
+    }
+  ]
 }
