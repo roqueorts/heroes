@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Heroe } from '../models/heroe.model';
 
@@ -11,6 +11,14 @@ export class HeroesService {
 
   private url = 'http://localhost:4200/mock';
   private headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*' });
+  count = signal(0); // contador de héroes añadidos
+
+  public counter: BehaviorSubject<number> = new BehaviorSubject<number>(0); // contador con Subject
+
+  getCounter() {
+    return this.counter;
+  }
+
 
   constructor(private http: HttpClient) { }
 
@@ -47,26 +55,24 @@ export class HeroesService {
   }
 
   addHeroe(heroe: Heroe) {
-    /* const observerHeroe: Observer<Heroe> = {
-       next: data => {
-         console.log('Heroe añadido ' + data.name);
-         return data;
-       },
-       error: catchError(this.handleError<Heroe>('addHeroe')),
-       complete: () => {
-         console.log('completado');
-       }
-     };*/
     console.log('Heroe a añadir');
     console.log(heroe);
-    // this.http.post<Heroe>('http://localhost:4200/mock/heroes', heroe, { headers: this.headers }).subscribe(observerHeroe);
     return this.http.post<Heroe>('http://localhost:4200/mock/heroes', heroe, { headers: this.headers }).pipe(
       map(data => {
+        this.increment();
+        this.counter.next(this.count());
         console.log('Héroe añadido');
         return data;
       }), tap(data => console.log('added heroe ' + data)),
       catchError(this.handleError<Heroe>('addHeroe'))
     );
+  }
+
+  /**
+   * // Incrementar el contador de héroes añadidos
+   */
+  increment() {
+    this.count.update((value) => value + 1);
   }
 
   editHeroe(heroe: Heroe) {

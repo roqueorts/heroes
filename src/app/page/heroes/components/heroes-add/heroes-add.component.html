@@ -4,9 +4,10 @@
 
     <mat-form-field class="example-full-width">
         <mat-label>Nombre</mat-label>
-        <!-- value="Sushi" -->
-        <input matInput placeholder="Ej. Blas de Lezo" formControlName="name" [errorStateMatcher]="matcher"
-            [value]="(hero$ | async)?.name">
+        <!-- [value]="hero.name" #name  [value]="heroeForm.value.name" -->
+        <!-- oninput="this = this.toUpperCase()" [(ngModel)]="heroeForm.value.name" -->
+        <input matInput placeholder="Ej. Blas de Lezo" formControlName="name" [(ngModel)]="heroeForm.value.name"
+            appUppercase [errorStateMatcher]="matcher">
         <mat-hint>Campo obligatorio</mat-hint>
         @if (heroeForm.get('name')?.hasError('required')) {
         <mat-error>El nombre es <strong>requerido</strong></mat-error>
@@ -15,8 +16,7 @@
 
     <mat-form-field class="example-full-width">
         <mat-label>Edad</mat-label>
-        <input matInput [type]="'number'" placeholder="Ej. 30" formControlName="age" [value]="(hero$ | async)?.age"
-            [errorStateMatcher]="matcher">
+        <input matInput [type]="'number'" placeholder="Ej. 30" formControlName="age" [errorStateMatcher]="matcher">
         <mat-hint>Campo obligatorio</mat-hint>
         @if (heroeForm.get('age')?.hasError('required')) {
         <mat-error>La edad es <strong>requerida</strong></mat-error>
@@ -25,8 +25,7 @@
     <mat-form-field class="example-full-width">
         <mat-label>Color de ojo</mat-label>
         <!-- type="color"  -->
-        <input matInput type="text" placeholder="Ej. Azul" formControlName="eyeColor"
-            [value]="(hero$ | async)?.eyeColor" [errorStateMatcher]="matcher">
+        <input matInput type="text" placeholder="Ej. Azul" formControlName="eyeColor" [errorStateMatcher]="matcher">
         <mat-hint>Campo obligatorio</mat-hint>
         @if (heroeForm.get('eyeColor')?.hasError('required')) {
         <mat-error>El color es <strong>requerido</strong></mat-error>

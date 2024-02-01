@@ -9,10 +9,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
+import { UppercaseDirective } from '../../../../shared/directives/uppercase.directive';
 import { HeroesState } from '../../heroes.reducer';
 import { Heroe } from '../../models/heroe.model';
 import { HeroesService } from '../../services/heroes.service';
@@ -25,10 +26,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
+
 @Component({
   selector: 'app-heroes-add',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, NgbHighlight, MatCardModule, MatDialogModule, MatIconModule],
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, NgbHighlight, MatCardModule, MatDialogModule, MatIconModule, UppercaseDirective],
 
   templateUrl: './heroes-add.component.html',
   styleUrl: './heroes-add.component.scss'
@@ -48,20 +50,31 @@ export class HeroesAddComponent implements OnInit, OnDestroy {
     private formBuilder: NonNullableFormBuilder,
     private heroesService: HeroesService,
     private route: ActivatedRoute,
-    private router: Router,
     private snackBar: MatSnackBar,
     private store: Store<HeroesState>) {
   }
-  hero$: Observable<Heroe> = new Observable();
+
+  hero: Heroe = new Heroe();
+  // counter = signal(0);
+  // derivedCounter = computed(() => {
+
+  //   return this.counter() + 1;
+
+  // });
 
   ngOnInit(): void {
+    //const countador = signal(10);
     this.heroId = this.route.snapshot.paramMap.get('id')!; // para que no acepte nulos.
     console.log('El id es:', this.heroId);
 
     if (this.heroId != 'new' && this.heroId !== undefined) // is number
     {
-      this.hero$ = this.heroesService.getHeroeById(Number(this.heroId)).pipe(tap(heroe => this.heroeForm.patchValue(
-        { ...heroe, id: heroe.id.toString(), age: heroe.age.toString() })));;
+      this.heroesService.getHeroeById(Number(this.heroId)).pipe(tap(
+        heroe =>
+          this.heroeForm.patchValue(
+            { ...heroe, id: heroe.id.toString(), age: heroe.age.toString() }))).subscribe(hero => {
+              this.hero = hero;
+            });
     }
   }
 
@@ -75,8 +88,8 @@ export class HeroesAddComponent implements OnInit, OnDestroy {
     let heroe: Heroe = Object.assign(new Heroe(), this.heroeForm.value);
     if (this.heroId == 'new') // is new heroe
     {
+      heroe.id = Math.random();
       console.log(heroe);
-      // this.heroesService.addHeroe(heroe).pipe(takeUntilDestroyed()).subscribe(() => this.router.navigate(['/home']));
       this.subscriptions.add(this.heroesService.addHeroe(heroe).subscribe(() => {
         this.snackBar.open('Héroe añadido!', 'Cerrar', {
           duration: 1500
