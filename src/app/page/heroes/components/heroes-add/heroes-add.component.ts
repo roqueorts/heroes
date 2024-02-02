@@ -55,24 +55,18 @@ export class HeroesAddComponent implements OnInit, OnDestroy {
   }
 
   hero: Heroe = new Heroe();
-  // counter = signal(0);
-  // derivedCounter = computed(() => {
-
-  //   return this.counter() + 1;
-
-  // });
 
   ngOnInit(): void {
-    //const countador = signal(10);
+
     this.heroId = this.route.snapshot.paramMap.get('id')!; // para que no acepte nulos.
     console.log('El id es:', this.heroId);
 
     if (this.heroId != 'new' && this.heroId !== undefined) // is number
     {
       this.heroesService.getHeroeById(Number(this.heroId)).pipe(tap(
-        heroe =>
+        (heroe: Heroe) =>
           this.heroeForm.patchValue(
-            { ...heroe, id: heroe.id.toString(), age: heroe.age.toString() }))).subscribe(hero => {
+            { ...heroe, id: heroe?.id.toString(), age: heroe?.age.toString() }))).subscribe(hero => {
               this.hero = hero;
             });
     }
@@ -82,13 +76,13 @@ export class HeroesAddComponent implements OnInit, OnDestroy {
     console.log('Agregar');
 
     if (this.heroeForm.invalid) {
-
       return;
     }
+
     let heroe: Heroe = Object.assign(new Heroe(), this.heroeForm.value);
     if (this.heroId == 'new') // is new heroe
     {
-      heroe.id = Math.random();
+      heroe.id = Math.floor(Math.random() * 100);
       console.log(heroe);
       this.subscriptions.add(this.heroesService.addHeroe(heroe).subscribe(() => {
         this.snackBar.open('Héroe añadido!', 'Cerrar', {

@@ -4,8 +4,6 @@
 
     <mat-form-field class="example-full-width">
         <mat-label>Nombre</mat-label>
-        <!-- [value]="hero.name" #name  [value]="heroeForm.value.name" -->
-        <!-- oninput="this = this.toUpperCase()" [(ngModel)]="heroeForm.value.name" -->
         <input matInput placeholder="Ej. Blas de Lezo" formControlName="name" [(ngModel)]="heroeForm.value.name"
             appUppercase [errorStateMatcher]="matcher">
         <mat-hint>Campo obligatorio</mat-hint>

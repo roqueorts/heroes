@@ -100,7 +100,7 @@ export class HeroesService {
     console.log('Heroe a editar');
     console.log(heroeId);
     return this.http.delete<Heroe>(`http://localhost:4200/mock/heroes/${heroeId}`, { headers: this.headers }).pipe(
-      map(data => {
+      map((data: Heroe) => {
         console.log('Heroe eliminado');
         return data;
       }), tap(data => console.log('deleted heroe ', data)),

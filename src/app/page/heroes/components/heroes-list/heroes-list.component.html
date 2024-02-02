@@ -13,7 +13,6 @@
             <div class="table-responsive">
                 <mat-form-field>
                     <mat-label>Filter</mat-label>
-                    <!-- (keyup)="applyFilter($event)" -->
                     <input matInput placeholder="Ej. roque" [formControl]="filter" #input>
                 </mat-form-field>
                 <div class="mat-elevation-z8" [hidden]="loading">
@@ -66,9 +65,6 @@
                         aria-label="Select page of heroes">
                     </mat-paginator>
                 </div>
-                <!-- <div *ngIf="heroes.length === 0 && !loading" class="alert alert-info" role="alert">
-                    <strong>No hay mas registros que mostrar </strong>
-                </div> -->
             </div>
         </div>
         <div *ngIf="loading" class="d-flex justify-content-center">

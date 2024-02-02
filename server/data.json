@@ -27,8 +27,8 @@
   "heroes": [
     {
       "id": "1234",
-      "name": "Andrew Owenes",
-      "age": 26,
+      "name": "ANDREW OWEN",
+      "age": "26",
       "eyeColor": "blue"
     },
     {
@@ -36,12 +36,6 @@
       "name": "Susan prueba",
       "age": 45,
       "eyeColor": "hazel"
-    },
-    {
-      "id": "1236",
-      "name": "John Doe",
-      "age": 53,
-      "eyeColor": "brown"
     },
     {
       "id": "1237",
@@ -54,12 +48,6 @@
       "name": "karina",
       "age": 38,
       "eyeColor": "green"
-    },
-    {
-      "id": "1239",
-      "name": "JOSE ANTONIo",
-      "age": "35",
-      "eyeColor": "negro"
     },
     {
       "id": "1",
@@ -134,58 +122,70 @@
       "eyeColor": "df"
     },
     {
-      "id": 0.5154123494970828,
+      "id": "0.5154123494970828",
       "name": "TEST",
       "age": "33",
       "eyeColor": "ses"
     },
     {
-      "id": 0.5773362818354237,
+      "id": "0.5773362818354237",
       "name": "FGDF",
       "age": "23",
       "eyeColor": "ff"
     },
     {
-      "id": 0.8587959219744277,
+      "id": "0.8587959219744277",
       "name": "GDFGDF",
       "age": "423",
       "eyeColor": "fdds"
     },
     {
-      "id": 0.2590505987817451,
+      "id": "0.2590505987817451",
       "name": "DFVGDFG3423",
       "age": "4234",
       "eyeColor": "dgfgd"
     },
     {
-      "id": 0.8383636974531559,
+      "id": "0.8383636974531559",
       "name": "RETE",
       "age": "4353",
       "eyeColor": "fgfg"
     },
     {
-      "id": 0.9803890154434673,
+      "id": "0.9803890154434673",
       "name": "GFDG",
       "age": "4534",
       "eyeColor": "gfdgd"
     },
     {
-      "id": 0.06935253629631344,
+      "id": "0.06935253629631344",
       "name": "GFHGF",
       "age": "56",
       "eyeColor": "gfh"
     },
     {
-      "id": 0.8659821594279289,
+      "id": "0.8659821594279289",
       "name": "DFGYDF",
       "age": "56",
       "eyeColor": "gfhgh"
     },
     {
-      "id": 0.9771501810521792,
+      "id": "0.9771501810521792",
       "name": "TTY",
       "age": "546",
       "eyeColor": "gf"
+    },
+    {
+      "id": "0.25047340888832714",
+      "name": "TEST",
+      "age": "33",
+      "eyeColor": "df"
+    },
+    {
+      "id": "19",
+      "name": "PRUEBA 1",
+      "age": "45",
+      "eyeColor": "verde"
     }
   ]
 }

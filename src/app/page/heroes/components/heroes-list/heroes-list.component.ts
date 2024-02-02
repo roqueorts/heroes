@@ -8,7 +8,7 @@ import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/mat
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgbHighlight, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { Subject, of, startWith, switchMap, takeUntil } from 'rxjs';
+import { Subject, concatAll, map, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { DialogAlertComponent } from '../../../../shared/components/dialog-alert/dialog-alert.component';
 import { Heroe } from '../../models/heroe.model';
 import { HeroesService } from '../../services/heroes.service';
@@ -21,13 +21,11 @@ import { HeroesService } from '../../services/heroes.service';
   styleUrl: './heroes-list.component.scss'
 })
 export class HeroesListComponent implements OnInit, OnDestroy {
-  public heroes: Heroe[] = [];
   heroe: Heroe = new Heroe();
   page = 1;
   pageSize = 2;
   loading = true;
   filter = new FormControl('', { nonNullable: true });
-  //heroesFiltrados$: Subscription = new Subscription();
   count = this.heroesService.count();
   totalHeroes = 0;
   displayedColumns: string[] = ['id', 'name', 'age', 'color', 'options'];
@@ -43,45 +41,31 @@ export class HeroesListComponent implements OnInit, OnDestroy {
     private heroesService: HeroesService,
     public dialog: MatDialog
   ) {
-    // this.filter.valueChanges.subscribe((text) => this.search(text));
-    // this.heroesFiltrados$ =
+  }
+
+  ngOnInit() {
+
+    this.search();
+    this.heroesService.getCounter().subscribe((result: number) => this.totalHeroes = result);
+
+  }
+
+  search() {
     this.filter.valueChanges
       .pipe(
         takeUntil(this.unsubscribe$),
         startWith(''),
         switchMap(text => {
-          console.log(text);
           return this.heroesService.getHeroes(text);
         })
       ).subscribe(heroesFiltrados => {
         setTimeout(() => {
-          console.log(heroesFiltrados);
-          this.heroes = heroesFiltrados;
           this.loading = false;
           this.dataSource = new MatTableDataSource<Heroe>(heroesFiltrados);
           this.dataSource.paginator = this.paginator;
         }, 1000);
       });
-    //this.getHeroes();
-  }
 
-  ngOnInit() {
-    console.log('The count is: ' + this.count);
-    this.heroesService.getCounter().subscribe((result: number) => {
-      console.log('Total en subject: ', result);
-      this.totalHeroes = result;
-
-    });
-  }
-
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   getHeroes() {
@@ -90,35 +74,19 @@ export class HeroesListComponent implements OnInit, OnDestroy {
       console.log('Estos son los heroes:');
       console.log(res);
       setTimeout(() => {
-        this.heroes = res;
         this.dataSource = new MatTableDataSource<Heroe>(res);
         this.dataSource.paginator = this.paginator;
         this.loading = false;
       }, 1000);
 
     });
-  }
-
-  search(text: string) {
-    this.heroesService.getHeroes(text).subscribe(res => {
-      console.log('Estos son los heroes:');
-      console.log(res);
-      setTimeout(() => {
-        this.heroes = res;
-        this.dataSource = new MatTableDataSource<Heroe>(res);
-        this.dataSource.paginator = this.paginator;
-        this.loading = false;
-      }, 1000);
-
-    });
-
   }
 
 
   delete(heroeId: number) {
     this.openDialog('200ms', '200ms').afterClosed()
       .pipe(
-        switchMap((result) => {
+        map((result) => {
           console.log(`Dialog result: ${result}`);
           if (result) {
             return this.heroesService.deleteHeroe(heroeId);
@@ -126,9 +94,16 @@ export class HeroesListComponent implements OnInit, OnDestroy {
           return of('ninguno');
         })
       )
-      .subscribe(result => {
-        console.log('Héroe borrado:', result);
-      });
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        concatAll()
+      )
+      .subscribe(
+        result => {
+          this.getHeroes();
+          console.log('Héroe borrado:', result);
+        }
+      );
 
   }
 
